@@ -4,14 +4,14 @@ var emptyListMessage = document.querySelector('.empty-tasks');
 var newItemForm = document.querySelector('.add-form');
 var newItemTitle = newItemForm.querySelector('.add-form-input');
 var taskTemplate = document.querySelector('#task-template').content;
-console.log(taskTemplate);
 var newItemTemplate = taskTemplate.querySelector('.todo-list-item');
-console.log(newItemTemplate);
 
 var toggleEmptyListMessage = function () {
   if (items.length === 0) {
     emptyListMessage.classList.remove('hidden');
-  }
+  } else {
+    emptyListMessage.classList.add('hidden');
+  } 
 };
 
 var addCheckHandler = function (item) {
@@ -30,4 +30,13 @@ newItemForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
 
   var taskText = newItemTitle.value;
+  var task = newItemTemplate.cloneNode(true);
+  
+  var taskDescription = task.querySelector('span');
+  taskDescription.textContent = taskText;
+  addCheckHandler(task);
+
+  list.appendChild(task);
+  toggleEmptyListMessage();
+  newItemTitle.value = '';
 });
